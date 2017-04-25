@@ -79,8 +79,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }
