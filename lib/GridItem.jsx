@@ -63,6 +63,7 @@ export default class GridItem extends React.Component {
       if (value < props.h || value < props.minH) return new Error('maxHeight smaller than item height/minHeight');
     },
 
+    aspectRatio: PropTypes.number,
     // ID is nice to have for callbacks
     i: PropTypes.string.isRequired,
 
@@ -73,10 +74,12 @@ export default class GridItem extends React.Component {
     onResizeStop: PropTypes.func,
     onResizeStart: PropTypes.func,
     onResize: PropTypes.func,
+	changeWH: PropTypes.func,
 
     // Flags
     isDraggable: PropTypes.bool.isRequired,
     isResizable: PropTypes.bool.isRequired,
+	isSaveAspectRatio: PropTypes.bool,
     static: PropTypes.bool,
 
     // Use CSS transforms instead of top/left
@@ -96,7 +99,9 @@ export default class GridItem extends React.Component {
     minH: 1,
     minW: 1,
     maxH: Infinity,
-    maxW: Infinity
+    maxW: Infinity,
+	aspectRatio: 0,
+	isSaveAspectRatio: false
   };
 
   state: State = {
@@ -344,6 +349,9 @@ export default class GridItem extends React.Component {
       if (!this.props[handlerName]) return;
       const {cols, x, i, maxW, minW, maxH, minH} = this.props;
 
+		if (this.props.isSaveAspectRatio) {
+			size = this.calcSizeWithAspectRatio(size);
+		}
       // Get new XY
       let {w, h} = this.calcWH(size);
 
@@ -389,4 +397,34 @@ export default class GridItem extends React.Component {
 
     return newChild;
   }
+
+	calcSizeWithAspectRatio({height, width}: {height: number, width: number}) {
+		const {cols, x, y, maxW} = this.props;
+		let resizeMaxW = (cols - x > maxW) ? maxW : cols - x;
+		let maxWidth = this.calcWidth(resizeMaxW);
+		let maxHeight = maxWidth * this.props.aspectRatio;
+
+		if (width >= maxWidth || height >= maxHeight) {
+			return {
+				width: maxWidth,
+				height: maxHeight
+			}
+		} else {
+			let newHeight = width * this.props.aspectRatio;
+			let newWidth = height / this.props.aspectRatio;
+			if (newHeight > height) {
+				height = newHeight;
+			} else {
+				width = newWidth;
+			}
+		}
+		return {width, height}
+	}
+
+	calcWidth(w: number) {
+		const {margin} = this.props;
+		const colWidth = this.calcColWidth();
+		return (w === Infinity) ? w : Math.round(colWidth * w + Math.max(0, w - 1) * margin[0]);
+	}
+
 }
