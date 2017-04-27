@@ -373,6 +373,7 @@ var ReactGridLayout = function (_React$Component) {
         onResizeStart: this.onResizeStart,
         onResize: this.onResize,
         onResizeStop: this.onResizeStop,
+        isSaveAspectRatio: l.isSaveAspectRatio,
         isDraggable: draggable,
         isResizable: resizable,
         useCSSTransforms: useCSSTransforms && mounted,

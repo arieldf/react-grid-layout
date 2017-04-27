@@ -354,7 +354,7 @@ export default class GridItem extends React.Component {
 
       // Min/max capping
       w = Math.max(Math.min(w, maxW), minW);
-      h = Math.max(Math.min(h, maxH), minH);
+      h = Math.max(Math.min(h, maxH)-1, minH);
 
       this.setState({resizing: handlerName === 'onResizeStop' ? null : size});
 
