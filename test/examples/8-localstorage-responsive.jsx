@@ -15,7 +15,7 @@ var ResponsiveLocalStorageLayout = React.createClass({
   getDefaultProps() {
     return {
       className: "layout",
-      cols: {lg: 4, md: 3, sm: 3, xs: 1, xxs: 1},
+      cols: {lg: 3, md: 3, sm: 2, xs: 2, xxs: 1},
 		rowHeightPercent: 61.8,
 		onLayoutChange: function() {},
     };
@@ -49,7 +49,6 @@ var ResponsiveLocalStorageLayout = React.createClass({
           <div key="1" data-grid={{w: 1, h: 1, x: 0, y: 0}}><span className="text">1</span></div>
           <div key="2" data-grid={{w: 1, h: 1, x: 1, y: 0}}><span className="text">2</span></div>
           <div key="3" data-grid={{w: 1, h: 1, x: 2, y: 0}}><span className="text">3</span></div>
-          <div key="4" data-grid={{w: 1, h: 1, x: 3, y: 0}}><span className="text">4</span></div>
         </ResponsiveReactGridLayout>
       </div>
     );

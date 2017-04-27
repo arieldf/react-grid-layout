@@ -5,8 +5,7 @@ export type LayoutItemRequired = {w: number, h: number, x: number, y: number, i:
 export type LayoutItem = LayoutItemRequired &
                          {minW?: number, minH?: number, maxW?: number, maxH?: number,
                           moved?: boolean, static?: boolean,
-                          isDraggable?: ?boolean, isResizable?: ?boolean,
-                             isSaveAspectRatio?: ?boolean, aspectRatio?: number};
+                          isDraggable?: ?boolean, isResizable?: ?boolean};
 export type Layout = Array<LayoutItem>;
 export type Position = {left: number, top: number, width: number, height: number};
 export type DragCallbackData = {
@@ -52,8 +51,7 @@ export function cloneLayoutItem(layoutItem: LayoutItem): LayoutItem {
     minW: layoutItem.minW, maxW: layoutItem.maxW, minH: layoutItem.minH, maxH: layoutItem.maxH,
     moved: Boolean(layoutItem.moved), static: Boolean(layoutItem.static),
     // These can be null
-    isDraggable: layoutItem.isDraggable, isResizable: layoutItem.isResizable,
-    isSaveAspectRatio: layoutItem.isSaveAspectRatio, aspectRatio: layoutItem.aspectRatio
+    isDraggable: layoutItem.isDraggable, isResizable: layoutItem.isResizable
   };
 }
 

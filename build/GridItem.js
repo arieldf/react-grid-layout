@@ -364,10 +364,6 @@ var GridItem = function (_React$Component) {
           maxH = _props7.maxH,
           minH = _props7.minH;
 
-
-      if (_this3.props.isSaveAspectRatio) {
-        size = _this3.calcSizeWithAspectRatio(size);
-      }
       // Get new XY
 
       var _calcWH = _this3.calcWH(size),
@@ -427,43 +423,6 @@ var GridItem = function (_React$Component) {
     return newChild;
   };
 
-  GridItem.prototype.calcSizeWithAspectRatio = function calcSizeWithAspectRatio(_ref4) {
-    var height = _ref4.height,
-        width = _ref4.width;
-    var _props9 = this.props,
-        cols = _props9.cols,
-        x = _props9.x,
-        y = _props9.y,
-        maxW = _props9.maxW;
-
-    var resizeMaxW = cols - x > maxW ? maxW : cols - x;
-    var maxWidth = this.calcWidth(resizeMaxW);
-    var maxHeight = maxWidth * this.props.aspectRatio;
-
-    if (width >= maxWidth || height >= maxHeight) {
-      return {
-        width: maxWidth,
-        height: maxHeight
-      };
-    } else {
-      var newHeight = width * this.props.aspectRatio;
-      var newWidth = height / this.props.aspectRatio;
-      if (newHeight > height) {
-        height = newHeight;
-      } else {
-        width = newWidth;
-      }
-    }
-    return { width: width, height: height };
-  };
-
-  GridItem.prototype.calcWidth = function calcWidth(w) {
-    var margin = this.props.margin;
-
-    var colWidth = this.calcColWidth();
-    return w === Infinity ? w : Math.round(colWidth * w + Math.max(0, w - 1) * margin[0]);
-  };
-
   return GridItem;
 }(_react2.default.Component);
 
@@ -511,7 +470,6 @@ GridItem.propTypes = {
     if (value < props.h || value < props.minH) return new Error('maxHeight smaller than item height/minHeight');
   },
 
-  aspectRatio: _propTypes2.default.number,
   // ID is nice to have for callbacks
   i: _propTypes2.default.string.isRequired,
 
@@ -522,12 +480,10 @@ GridItem.propTypes = {
   onResizeStop: _propTypes2.default.func,
   onResizeStart: _propTypes2.default.func,
   onResize: _propTypes2.default.func,
-  changeWH: _propTypes2.default.func,
 
   // Flags
   isDraggable: _propTypes2.default.bool.isRequired,
   isResizable: _propTypes2.default.bool.isRequired,
-  isSaveAspectRatio: _propTypes2.default.bool,
   static: _propTypes2.default.bool,
 
   // Use CSS transforms instead of top/left
@@ -546,8 +502,6 @@ GridItem.defaultProps = {
   minH: 1,
   minW: 1,
   maxH: Infinity,
-  maxW: Infinity,
-  aspectRatio: 0,
-  isSaveAspectRatio: false
+  maxW: Infinity
 };
 exports.default = GridItem;

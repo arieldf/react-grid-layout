@@ -69,8 +69,7 @@ function cloneLayoutItem(layoutItem) {
     minW: layoutItem.minW, maxW: layoutItem.maxW, minH: layoutItem.minH, maxH: layoutItem.maxH,
     moved: Boolean(layoutItem.moved), static: Boolean(layoutItem.static),
     // These can be null
-    isDraggable: layoutItem.isDraggable, isResizable: layoutItem.isResizable,
-    isSaveAspectRatio: layoutItem.isSaveAspectRatio, aspectRatio: layoutItem.aspectRatio
+    isDraggable: layoutItem.isDraggable, isResizable: layoutItem.isResizable
   };
 }
 
