@@ -28,6 +28,7 @@ export default class GridItem extends React.Component {
     containerWidth: PropTypes.number.isRequired,
     rowHeight: PropTypes.number,
     rowHeightPercent: PropTypes.number,
+    rowHeightStaticTop: PropTypes.number,
     margin: PropTypes.array.isRequired,
     maxRows: PropTypes.number.isRequired,
     containerPadding: PropTypes.array.isRequired,
@@ -96,7 +97,8 @@ export default class GridItem extends React.Component {
     minH: 1,
     minW: 1,
     maxH: Infinity,
-    maxW: Infinity
+    maxW: Infinity,
+    rowHeightStaticTop: 0,
   };
 
   state: State = {
@@ -121,12 +123,12 @@ export default class GridItem extends React.Component {
    * @return {Object}                Object containing coords.
    */
   calcPosition(x: number, y: number, w: number, h: number, state: ?Object): Position {
-    const {margin, containerPadding, rowHeightPercent} = this.props;
+    const {margin, containerPadding, rowHeightPercent, rowHeightStaticTop} = this.props;
     const colWidth = this.calcColWidth();
 
 	  var rowHeight;
 	  if (rowHeightPercent) {
-		  rowHeight = colWidth * rowHeightPercent / 100;
+		  rowHeight = (colWidth * rowHeightPercent / 100) - rowHeightStaticTop;
 	  } else {
 		  rowHeight = this.props.rowHeight;
 	  }

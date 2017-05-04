@@ -100,7 +100,7 @@ var ReactGridLayout = function (_React$Component) {
     var rowHeight;
     if (this.props.rowHeightPercent) {
       var colWidth = (this.props.width - this.props.margin[0] * (this.props.cols + 1)) / this.props.cols;
-      rowHeight = colWidth * this.props.rowHeightPercent / 100;
+      rowHeight = colWidth * this.props.rowHeightPercent / 100 - this.props.rowHeightStaticTop;
     } else {
       rowHeight = this.props.rowHeight;
     }
@@ -297,7 +297,8 @@ var ReactGridLayout = function (_React$Component) {
         rowHeight = _props.rowHeight,
         rowHeightPercent = _props.rowHeightPercent,
         maxRows = _props.maxRows,
-        useCSSTransforms = _props.useCSSTransforms;
+        useCSSTransforms = _props.useCSSTransforms,
+        rowHeightStaticTop = _props.rowHeightStaticTop;
 
     // {...this.state.activeDrag} is pretty slow, actually
 
@@ -317,6 +318,7 @@ var ReactGridLayout = function (_React$Component) {
         maxRows: maxRows,
         rowHeight: rowHeight,
         rowHeightPercent: rowHeightPercent,
+        rowHeightStaticTop: rowHeightStaticTop,
         isDraggable: false,
         isResizable: false,
         useCSSTransforms: useCSSTransforms },
@@ -342,6 +344,7 @@ var ReactGridLayout = function (_React$Component) {
         containerPadding = _props2.containerPadding,
         rowHeight = _props2.rowHeight,
         rowHeightPercent = _props2.rowHeightPercent,
+        rowHeightStaticTop = _props2.rowHeightStaticTop,
         maxRows = _props2.maxRows,
         isDraggable = _props2.isDraggable,
         isResizable = _props2.isResizable,
@@ -365,6 +368,7 @@ var ReactGridLayout = function (_React$Component) {
         maxRows: maxRows,
         rowHeight: rowHeight,
         rowHeightPercent: rowHeightPercent,
+        rowHeightStaticTop: rowHeightStaticTop,
         cancel: draggableCancel,
         handle: draggableHandle,
         onDragStop: this.onDragStop,
@@ -465,6 +469,7 @@ ReactGridLayout.propTypes = {
   // Rows have a static height, but you can change this based on breakpoints if you like
   rowHeight: _propTypes2.default.number,
   rowHeightPercent: _propTypes2.default.number,
+  rowHeightStaticTop: _propTypes2.default.number,
   // Default Infinity, but you can specify a max here if you like.
   // Note that this isn't fully fleshed out and won't error if you specify a layout that
   // extends beyond the row capacity. It will, however, not allow users to drag/resize
@@ -529,6 +534,7 @@ ReactGridLayout.defaultProps = {
   margin: [10, 10],
   isDraggable: true,
   isResizable: true,
+  rowHeightStaticTop: 0,
   useCSSTransforms: true,
   verticalCompact: true,
   onLayoutChange: noop,

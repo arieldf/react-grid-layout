@@ -10,71 +10,74 @@ const originalLayouts = getFromLS('layouts') || {};
  * This layout demonstrates how to sync multiple responsive layouts to localstorage.
  */
 var ResponsiveLocalStorageLayout = React.createClass({
-  mixins: [PureRenderMixin],
+	mixins: [PureRenderMixin],
 
-  getDefaultProps() {
-    return {
-      className: "layout",
-      cols: {lg: 3, md: 3, sm: 2, xs: 2, xxs: 1},
-		rowHeightPercent: 61.8,
-		onLayoutChange: function() {},
-    };
-  },
+	getDefaultProps() {
+		return {
+			className: "layout",
+			cols: {lg: 3, md: 3, sm: 2, xs: 2, xxs: 1},
+			rowHeightPercent: 61.8,
+			rowHeightStaticTop: 100,
+			onLayoutChange: function() {},
+		};
+	},
 
-  getInitialState() {
-    return {
-      layouts: JSON.parse(JSON.stringify(originalLayouts))
-    };
-  },
+	getInitialState() {
+		return {
+			layouts: JSON.parse(JSON.stringify(originalLayouts))
+		};
+	},
 
-  resetLayout() {
-    this.setState({layouts: {}});
-  },
+	resetLayout() {
+		this.setState({layouts: {}});
+	},
 
-  onLayoutChange(layout, layouts) {
-    saveToLS('layouts', layouts);
-    this.setState({layouts});
-    this.props.onLayoutChange(layout, layouts);
-  },
+	onLayoutChange(layout, layouts) {
+		saveToLS('layouts', layouts);
+		this.setState({layouts});
+		this.props.onLayoutChange(layout, layouts);
+	},
 
-  render() {
-    return (
-      <div>
-        <button onClick={this.resetLayout}>Reset Layout</button>
-        <ResponsiveReactGridLayout
-            ref="rrgl"
-            {...this.props}
-            layouts={this.state.layouts}
-            onLayoutChange={this.onLayoutChange}>
-          <div key="1" data-grid={{w: 1, h: 1, x: 0, y: 0}}><span className="text">1</span></div>
-          <div key="2" data-grid={{w: 1, h: 1, x: 1, y: 0}}><span className="text">2</span></div>
-          <div key="3" data-grid={{w: 1, h: 1, x: 2, y: 0}}><span className="text">3</span></div>
-        </ResponsiveReactGridLayout>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div>
+				<button onClick={this.resetLayout}>Reset Layout</button>
+				<ResponsiveReactGridLayout
+					ref="rrgl"
+					{...this.props}
+					layouts={this.state.layouts}
+					onLayoutChange={this.onLayoutChange}>
+					<div key="1" data-grid={{w: 1, h: 1, x: 0, y: 0}}><span className="text">1</span></div>
+					<div key="2" data-grid={{w: 1, h: 1, x: 1, y: 0}}><span className="text">2</span></div>
+					<div key="3" data-grid={{w: 1, h: 1, x: 2, y: 0}}><span className="text">3</span></div>
+					<div key="4" data-grid={{w: 1, h: 1, x: 0, y: 1}}><span className="text">4</span></div>
+					<div key="5" data-grid={{w: 1, h: 1, x: 1, y: 1}}><span className="text">5</span></div>
+				</ResponsiveReactGridLayout>
+			</div>
+		);
+	}
 });
 
 module.exports = ResponsiveLocalStorageLayout;
 
 function getFromLS(key) {
-  let ls = {};
-  if (global.localStorage) {
-    try {
-      ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
-    } catch(e) {/*Ignore*/}
-  }
-  return ls[key];
+	let ls = {};
+	if (global.localStorage) {
+		try {
+			ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
+		} catch(e) {/*Ignore*/}
+	}
+	return ls[key];
 }
 
 function saveToLS(key, value) {
-  if (global.localStorage) {
-    global.localStorage.setItem('rgl-8', JSON.stringify({
-      [key]: value
-    }));
-  }
+	if (global.localStorage) {
+		global.localStorage.setItem('rgl-8', JSON.stringify({
+			[key]: value
+		}));
+	}
 }
 
 if (require.main === module) {
-  require('../test-hook.jsx')(module.exports);
+	require('../test-hook.jsx')(module.exports);
 }

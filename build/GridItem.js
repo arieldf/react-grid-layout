@@ -78,13 +78,14 @@ var GridItem = function (_React$Component) {
     var _props2 = this.props,
         margin = _props2.margin,
         containerPadding = _props2.containerPadding,
-        rowHeightPercent = _props2.rowHeightPercent;
+        rowHeightPercent = _props2.rowHeightPercent,
+        rowHeightStaticTop = _props2.rowHeightStaticTop;
 
     var colWidth = this.calcColWidth();
 
     var rowHeight;
     if (rowHeightPercent) {
-      rowHeight = colWidth * rowHeightPercent / 100;
+      rowHeight = colWidth * rowHeightPercent / 100 - rowHeightStaticTop;
     } else {
       rowHeight = this.props.rowHeight;
     }
@@ -435,6 +436,7 @@ GridItem.propTypes = {
   containerWidth: _propTypes2.default.number.isRequired,
   rowHeight: _propTypes2.default.number,
   rowHeightPercent: _propTypes2.default.number,
+  rowHeightStaticTop: _propTypes2.default.number,
   margin: _propTypes2.default.array.isRequired,
   maxRows: _propTypes2.default.number.isRequired,
   containerPadding: _propTypes2.default.array.isRequired,
@@ -502,6 +504,7 @@ GridItem.defaultProps = {
   minH: 1,
   minW: 1,
   maxH: Infinity,
-  maxW: Infinity
+  maxW: Infinity,
+  rowHeightStaticTop: 0
 };
 exports.default = GridItem;
